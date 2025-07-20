@@ -12,11 +12,11 @@ return new class extends Migration {
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade')->index();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('tasks')->onDelete('set null');
+            $table->foreignId('task_type_id')->constrained();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('task_type')->nullable();
             $table->datetime('due_date')->nullable();
             $table->integer('estimated_time')->nullable();
             $table->string('priority')->nullable();

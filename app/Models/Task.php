@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $fillable = ['user_id', 'parent_id', 'title', 'description', 'due_date', 'order', 'priority', 'status', 'task_type'];
+    protected $fillable = ['user_id', 'parent_id', 'title', 'description', 'due_date', 'order', 'priority', 'status', 'task_type_id'];
 
     protected $casts = [
         'due_date' => 'datetime',
         'priority' => 'string',
         'status' => 'string',
-        'task_type' => 'string',
     ];
 
     public function user()
@@ -28,5 +27,10 @@ class Task extends Model
     public function dependents()
     {
         return $this->hasMany(Task::class, 'parent_id');
+    }
+
+    public function taskType()
+    {
+        return $this->belongsTo(TaskType::class, 'task_type_id');
     }
 }

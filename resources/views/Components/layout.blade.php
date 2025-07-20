@@ -12,7 +12,7 @@
 
 <body class="bg-gray-50 min-h-screen font-sans flex flex-col">
     <!-- Header -->
-    <header class="w-full bg-white shadow-sm py-4 px-6 flex justify-between items-center sticky top-0 z-50">
+    <header class="w-full bg-white shadow-sm py-4 px-6 flex items-center sticky top-0 z-50">
         <div class="flex items-center gap-2">
             <svg class="w-8 h-8 text-orange-600" fill="none" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                 <rect x="4" y="4" width="24" height="24" rx="6" fill="currentColor" />
@@ -21,12 +21,20 @@
             <a href="{{ url('/') }}" class="text-xl font-bold text-gray-800 hover:text-orange-600 transition">Smart
                 Task</a>
         </div>
-        <nav class="flex gap-4">
-            <a href="{{ route('filament.admin.auth.login') }}"
-                class="text-white bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded transition font-medium">Login</a>
-            <a href="{{ route('register') }}"
-                class="text-white bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded transition font-medium">Register</a>
-        </nav>
+        <div class="flex flex-1 items-center">
+            <nav style="margin-left:50px;" class="flex gap-10 items-center">
+                <a href="/" class="text-gray-700 hover:text-orange-600 font-medium transition">Home</a>
+                <a href="/" class="text-gray-700 hover:text-orange-600 font-medium transition">About</a>
+                <a href="/" class="text-gray-700 hover:text-orange-600 font-medium transition">Services</a>
+                <a href="/" class="text-gray-700 hover:text-orange-600 font-medium transition">Contact</a>
+            </nav>
+            <div class="flex gap-2 items-center ml-auto">
+                <a href="{{ route('filament.admin.auth.login') }}"
+                    class="text-white bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded transition font-medium">Login</a>
+                <a href="{{ route('register') }}"
+                    class="text-white bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded transition font-medium">Register</a>
+            </div>
+        </div>
     </header>
 
     {{ $slot }}

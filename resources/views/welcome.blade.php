@@ -4,7 +4,7 @@
         <div id="slider" class="flex transition-transform duration-500 ease-in-out">
             <!-- Slide 1 -->
             <div class="w-full flex-shrink-0 relative">
-                <img src="{{ asset('storage/slider/s1.webp') }}" alt="Collaboration"
+                <img src="{{ asset('storage/slider/s1.jpg') }}" alt="Collaboration"
                     class="w-full h-[500px] object-cover">
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 bg-black/30">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Welcome to <span
@@ -23,7 +23,7 @@
             </div>
             <!-- Slide 2 -->
             <div class="w-full flex-shrink-0 relative">
-                <img src="{{ asset('storage/slider/s2.webp') }}" alt="Collaboration"
+                <img src="{{ asset('storage/slider/s2.jpg') }}" alt="Collaboration"
                     class="w-full h-[500px] object-cover">
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 bg-black/30">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Welcome to <span
@@ -42,7 +42,7 @@
             </div>
             <!-- Slide 3 -->
             <div class="w-full flex-shrink-0 relative">
-                <img src="{{ asset('storage/slider/s3.webp') }}" alt="Collaboration"
+                <img src="{{ asset('storage/slider/s3.jpg') }}" alt="Collaboration"
                     class="w-full h-[500px] object-cover">
                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-4 bg-black/30">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">Welcome to <span
@@ -87,7 +87,7 @@
     <!-- Features Section -->
     <section class="py-16 bg-white">
         <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Why Choose Smart Task?</h2>
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Why Choose Smart Task Management System?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <svg class="w-12 h-12 mx-auto text-orange-600 mb-4" fill="none" stroke="currentColor"
@@ -105,8 +105,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M17 20h5v-2a2 2 0 00-2-2h-3m-2-2H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v7a2 2 0 01-2 2z" />
                     </svg>
-                    <h3 class="text-xl font-semibold text-gray-900">Team Collaboration</h3>
-                    <p class="text-gray-600 mt-2">Share tasks and collaborate with your team in real-time.</p>
+                    <h3 class="text-xl font-semibold text-gray-900">AI powered Task Priority Prediction</h3>
+                    <p class="text-gray-600 mt-2">Leverage AI to predict task priorities and deadlines.</p>
                 </div>
                 <div class="text-center">
                     <svg class="w-12 h-12 mx-auto text-orange-600 mb-4" fill="none" stroke="currentColor"

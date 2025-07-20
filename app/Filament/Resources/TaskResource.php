@@ -22,7 +22,7 @@ class TaskResource extends Resource
 
     public static ?string $navigationGroup = 'Tasks Management';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     public static function getEloquentQuery(): Builder
     {
@@ -51,15 +51,11 @@ class TaskResource extends Resource
                             })
                             ->nullable()
                             ->searchable(),
-                        Forms\Components\Select::make('task_type')
+                        Forms\Components\Select::make('task_type_id')
                             ->label('Task Type')
-                            ->options([
-                                'analyze' => 'Analyze',
-                                'review' => 'Review',
-                                'planning' => 'Planning',
-                                'meeting' => 'Meeting'
-                            ])
+                            ->relationship('taskType', 'type', fn ($query) => $query->where('user_id', Auth::id()))
                             ->nullable()
+                            ->preload()
                             ->searchable(),
                         Forms\Components\TextInput::make('estimated_time')
                             ->label('Estimated Time (minutes)')
@@ -93,7 +89,7 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make('status')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('task_type')
+                Tables\Columns\TextColumn::make('taskType.type')
                     ->label('Task Type')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
