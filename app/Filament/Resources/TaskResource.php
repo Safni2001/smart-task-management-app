@@ -11,6 +11,9 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Filament\Notifications\Notification;
+use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TaskResource\Pages;
 use Illuminate\Database\Eloquent\Collection;
@@ -53,7 +56,7 @@ class TaskResource extends Resource
                             ->searchable(),
                         Forms\Components\Select::make('task_type_id')
                             ->label('Task Type')
-                            ->relationship('taskType', 'type', fn ($query) => $query->where('user_id', Auth::id()))
+                            ->relationship('taskType', 'type', fn($query) => $query->where('user_id', Auth::id()))
                             ->nullable()
                             ->preload()
                             ->searchable(),
@@ -133,6 +136,7 @@ class TaskResource extends Resource
                         })
                         ->icon('heroicon-o-eye'),
                     Tables\Actions\EditAction::make(),
+                    Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make(),
                 ])
             ])
@@ -171,6 +175,34 @@ class TaskResource extends Resource
                         }
                     }),
                 Tables\Actions\DeleteBulkAction::make(),
+            ]);
+    }
+
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Task Details')
+                    ->schema([
+                        TextEntry::make('title')
+                            ->label('Title'),
+                        TextEntry::make('description')
+                            ->label('Description'),
+                        TextEntry::make('due_date')
+                            ->label('Due Date'),
+                        TextEntry::make('priority')
+                            ->label('Priority'),
+                        TextEntry::make('status')
+                            ->label('Status'),
+                        TextEntry::make('estimated_time')
+                            ->label('Estimated Time (minutes)'),
+                        TextEntry::make('taskType.type')
+                            ->label('Task Type'),
+                        TextEntry::make('parent.title')
+                            ->label('Depends On'),
+                    ])
+                    ->columns(2),
             ]);
     }
 
