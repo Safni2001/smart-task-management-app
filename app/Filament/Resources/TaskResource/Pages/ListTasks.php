@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\TaskResource\Pages;
 
-use App\Filament\Resources\TaskResource;
 use Filament\Actions;
+use App\Filament\Imports\TaskImporter;
+use App\Filament\Resources\TaskResource;
 use Filament\Resources\Pages\ListRecords;
 
 class ListTasks extends ListRecords
@@ -14,6 +15,10 @@ class ListTasks extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\ImportAction::make()
+                ->importer(TaskImporter::class)
+                ->icon('heroicon-o-arrow-up-tray')
+                ->color('success'),
         ];
     }
 }

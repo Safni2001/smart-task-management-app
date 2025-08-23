@@ -17,6 +17,7 @@ use Filament\Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TaskResource\Pages;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 
 class TaskResource extends Resource
 {
@@ -108,15 +109,18 @@ class TaskResource extends Resource
                         ->action(function ($record) {
                             $tasks = collect([$record])->map(function ($task) {
                                 return [
-                                    'title' => $task->title,
-                                    'due_date' => $task->due_date,
-                                    'estimated_time' => $task->estimated_time,
-                                    'parent_id' => $task->parent_id ?? 0,
-                                    'status' => $task->status,
+                                    'title' => $task->title ?? 'Untitled',
+                                    'due_date' => $task->due_date ? $task->due_date->format('Y-m-d H:i:s') : null,
+                                    'estimated_time' => $task->estimated_time ?? 0,
+                                    'parent_id' => $task->parent_id ?? -1,
+                                    'status' => $task->status ?? 'pending',
+                                    'task_type' => $task->taskType ? $task->taskType->type : 'General',
                                 ];
                             })->toArray();
 
-                            $response = Http::post('http://localhost:8000/predict', ['tasks' => $tasks]);
+                            Log::info('Tasks sent to FastAPI (view_priority):', ['tasks' => $tasks]);
+
+                            $response = Http::timeout(30)->post('http://localhost:8000/predict', ['tasks' => $tasks]);
                             if ($response->successful()) {
                                 $predictions = $response->json()['tasks'];
                                 foreach ($predictions as $prediction) {
@@ -131,7 +135,13 @@ class TaskResource extends Resource
                                     ->success()
                                     ->send();
                             } else {
-                                throw new \Exception('Failed to update task order: ' . $response->body());
+                                $errorDetail = $response->json()['detail'] ?? $response->body();
+                                Log::error('FastAPI error (view_priority):', ['error' => $errorDetail]);
+                                Notification::make()
+                                    ->title('Failed to Update Priority')
+                                    ->body($errorDetail)
+                                    ->danger()
+                                    ->send();
                             }
                         })
                         ->icon('heroicon-o-eye'),
@@ -148,15 +158,18 @@ class TaskResource extends Resource
                     ->action(function (Collection $records) {
                         $tasks = $records->map(function ($task) {
                             return [
-                                'title' => $task->title,
-                                'due_date' => $task->due_date,
-                                'estimated_time' => $task->estimated_time,
-                                'parent_id' => $task->parent_id ?? 0,
-                                'status' => $task->status,
+                                'title' => $task->title ?? 'Untitled',
+                                'due_date' => $task->due_date ? $task->due_date->format('Y-m-d H:i:s') : null,
+                                'estimated_time' => $task->estimated_time ?? 0,
+                                'parent_id' => $task->parent_id ?? -1,
+                                'status' => $task->status ?? 'pending',
+                                'task_type' => $task->taskType ? $task->taskType->type : 'General',
                             ];
                         })->toArray();
 
-                        $response = Http::post('http://localhost:8000/predict', ['tasks' => $tasks]);
+                        Log::info('Tasks sent to FastAPI (view_priority_bulk):', ['tasks' => $tasks]);
+
+                        $response = Http::timeout(30)->post('http://localhost:8000/predict', ['tasks' => $tasks]);
                         if ($response->successful()) {
                             $predictions = $response->json()['tasks'];
                             foreach ($predictions as $prediction) {
@@ -171,13 +184,18 @@ class TaskResource extends Resource
                                 ->success()
                                 ->send();
                         } else {
-                            throw new \Exception('Failed to update task order: ' . $response->body());
+                            $errorDetail = $response->json()['detail'] ?? $response->body();
+                            Log::error('FastAPI error (view_priority_bulk):', ['error' => $errorDetail]);
+                            Notification::make()
+                                ->title('Failed to Update Priorities')
+                                ->body($errorDetail)
+                                ->danger()
+                                ->send();
                         }
                     }),
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-
 
     public static function infolist(Infolist $infolist): Infolist
     {

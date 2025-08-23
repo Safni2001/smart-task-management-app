@@ -40,9 +40,11 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                \App\Filament\Pages\Calendar::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                // List only the widgets you want on the dashboard
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -61,6 +63,7 @@ class AdminPanelProvider extends PanelProvider
             ->collapsibleNavigationGroups()
             ->navigationGroups([
                 NavigationGroup::make('Tasks Management')->icon('heroicon-o-list-bullet'),
+                NavigationGroup::make('Calender')->icon('heroicon-o-calendar'),
             ])
             ->plugin(
                 FilamentFullCalendarPlugin::make()
