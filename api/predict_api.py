@@ -10,11 +10,11 @@ app = FastAPI()
 
 # Load model and preprocessing objects
 try:
-    model = load_model('api/task_priority_model.h5')
-    ohe_status = joblib.load('api/status_ohe.pkl')
-    le_priority = joblib.load('api/label_encoder.pkl')
-    scaler = joblib.load('api/scaler.pkl')
-    tfidf = joblib.load('api/tfidf_vectorizer.pkl')
+    model = load_model('task_priority_model.h5')
+    ohe_status = joblib.load('status_ohe.pkl')
+    le_priority = joblib.load('label_encoder.pkl')
+    scaler = joblib.load('scaler.pkl')
+    tfidf = joblib.load('tfidf_vectorizer.pkl')
 except Exception as e:
     raise Exception(f"Failed to load model or preprocessors: {str(e)}")
 
