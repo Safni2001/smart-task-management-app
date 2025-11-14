@@ -79,6 +79,7 @@ class TaskResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->query(Task::query()->where('user_id', Auth::id()))
             ->columns([
                 Tables\Columns\TextColumn::make('title')

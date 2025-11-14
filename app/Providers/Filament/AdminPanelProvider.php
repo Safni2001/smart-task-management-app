@@ -41,10 +41,17 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
                 \App\Filament\Pages\Calendar::class,
+                \App\Filament\Pages\TaskAnalytics::class,
             ])
-            // ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                // List only the widgets you want on the dashboard
+                // Analytics widgets for main dashboard (clean, no heading)
+                \App\Filament\Widgets\TaskCompletionStatsWidget::class,
+                \App\Filament\Widgets\TimeTrackingWidget::class,
+                \App\Filament\Widgets\TaskPriorityDistributionWidget::class,
+                \App\Filament\Widgets\TaskTypeAnalyticsWidget::class,
+                \App\Filament\Widgets\ProductivityTrendsWidget::class,
+                // CalendarWidget is excluded via $isDiscovered = false
             ])
             ->middleware([
                 EncryptCookies::class,

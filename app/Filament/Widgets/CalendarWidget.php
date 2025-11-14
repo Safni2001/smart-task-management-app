@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 class CalendarWidget extends FullCalendarWidget
 {
     public Model|string|null $model = Task::class; // Updated type declaration
+    
+    // Prevent this widget from showing on the main dashboard
+    protected static bool $isDiscovered = false;
 
     public function fetchEvents(array $fetchInfo): array
     {
